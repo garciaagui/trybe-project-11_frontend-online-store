@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import Aside from './components/Aside';
 import ProductList from './pages/ProductList';
 
 class App extends Component {
@@ -11,6 +12,7 @@ class App extends Component {
             <Route path="/" component={ ProductList } />
           </Switch>
         </BrowserRouter>
+        <Aside />
       </div>
     );
   }
