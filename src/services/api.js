@@ -3,6 +3,7 @@ export async function getCategories() {
   const result = await fetch(url);
   const data = await result.json();
   return data;
+  // commit
 }
 
 export async function getProductsFromCategoryAndQuery(categoryId, query) {
