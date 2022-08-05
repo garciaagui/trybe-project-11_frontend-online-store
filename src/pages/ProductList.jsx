@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Aside from '../components/Aside';
 
 class ProductList extends Component {
   render() {
@@ -9,6 +10,7 @@ class ProductList extends Component {
         >
           Digite algum termo de pesquisa ou escolha uma categoria.
         </span>
+        <Aside />
       </div>
     );
   }
