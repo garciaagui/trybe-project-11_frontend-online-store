@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Product from '../Components/ProductCard';
+import Product from '../components/ProductCard';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Aside from '../components/Aside';
 
