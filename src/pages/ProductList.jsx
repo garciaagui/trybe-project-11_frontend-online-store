@@ -45,6 +45,7 @@ class ProductList extends Component {
           >
             BUSCAR
           </button>
+          <Aside />
           <div id="search-list">
             { valueInput.length === 0 ? (
               <span
@@ -59,6 +60,7 @@ class ProductList extends Component {
                 dataReturned.map((item) => (
                   <Product
                     key={ item.id }
+                    id={ item.id }
                     name={ item.title }
                     price={ item.price }
                     image={ item.thumbnail }
@@ -67,7 +69,6 @@ class ProductList extends Component {
             </div>
           </div>
         </main>
-        <Aside />
         <Link data-testid="shopping-cart-button" to="/shopping-cart">
           <button type="button">
             Carrinho de Compras
