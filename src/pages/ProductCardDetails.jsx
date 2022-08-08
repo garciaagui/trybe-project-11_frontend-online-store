@@ -14,8 +14,13 @@ export default class ProductCardDetails extends Component {
     this.setState({ product: productResult });
   }
 
+  setLocalStorage = (element) => {
+    localStorage.setItem('product', element);
+  }
+
   render() {
     const { product } = this.state;
+    const { match: { params: { id } } } = this.props;
     return (
       <div>
         <div>
@@ -35,10 +40,20 @@ export default class ProductCardDetails extends Component {
           </div>
         </div>
         <Link data-testid="shopping-cart-button" to="/shopping-cart">
-          <button type="button">
+          <button
+            type="button"
+          >
             Carrinho de Compras
           </button>
         </Link>
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onChange={ this.setLocalStorage(id) }
+        >
+          Adicionar ao Carrinho
+
+        </button>
       </div>
     );
   }

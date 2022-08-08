@@ -42,6 +42,7 @@ class Aside extends Component {
           : resultsFromCategory.map((product) => (
             <Product
               key={ product.id }
+              id={ product.id }
               name={ product.title }
               price={ product.price }
               image={ product.thumbnail }
