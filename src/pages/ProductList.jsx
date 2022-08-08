@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Product from '../Components/ProductCard';
+import Product from '../components/ProductCard';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Aside from '../components/Aside';
 
@@ -45,6 +45,7 @@ class ProductList extends Component {
           >
             BUSCAR
           </button>
+          <Aside />
           <div id="search-list">
             { valueInput.length === 0 ? (
               <span
@@ -67,7 +68,6 @@ class ProductList extends Component {
             </div>
           </div>
         </main>
-        <Aside />
         <Link data-testid="shopping-cart-button" to="/shopping-cart">
           <button type="button">
             Carrinho de Compras
