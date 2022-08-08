@@ -18,3 +18,10 @@ export async function getProductsByCategory(categoryId) {
   const data = await result.json();
   return data;
 }
+
+export async function getProductsById(productId) {
+  const url = `https://api.mercadolibre.com/items/${productId}`;
+  const result = await fetch(url);
+  const data = await result.json();
+  return data;
+}

@@ -60,6 +60,7 @@ class ProductList extends Component {
                 dataReturned.map((item) => (
                   <Product
                     key={ item.id }
+                    id={ item.id }
                     name={ item.title }
                     price={ item.price }
                     image={ item.thumbnail }
