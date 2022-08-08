@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
+import { addItem } from '../services/localStorage';
 
 export default class ProductCardDetails extends Component {
   state = {
@@ -13,6 +14,10 @@ export default class ProductCardDetails extends Component {
     const productResult = await getProductsById(id);
     this.setState({ product: productResult });
   }
+
+  // setLocalStorage = (element) => {
+  //   localStorage.setItem('product', element);
+  // }
 
   render() {
     const { product } = this.state;
@@ -35,10 +40,20 @@ export default class ProductCardDetails extends Component {
           </div>
         </div>
         <Link data-testid="shopping-cart-button" to="/shopping-cart">
-          <button type="button">
+          <button
+            type="button"
+          >
             Carrinho de Compras
           </button>
         </Link>
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ async () => addItem(product) }
+        >
+          Adicionar ao Carrinho
+
+        </button>
       </div>
     );
   }
