@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
+import { addItem } from '../services/localStorage';
 
 export default class ProductCardDetails extends Component {
   state = {
@@ -14,13 +15,12 @@ export default class ProductCardDetails extends Component {
     this.setState({ product: productResult });
   }
 
-  setLocalStorage = (element) => {
-    localStorage.setItem('product', element);
-  }
+  // setLocalStorage = (element) => {
+  //   localStorage.setItem('product', element);
+  // }
 
   render() {
     const { product } = this.state;
-    const { match: { params: { id } } } = this.props;
     return (
       <div>
         <div>
@@ -49,7 +49,7 @@ export default class ProductCardDetails extends Component {
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onChange={ this.setLocalStorage(id) }
+          onClick={ async () => addItem(product) }
         >
           Adicionar ao Carrinho
 

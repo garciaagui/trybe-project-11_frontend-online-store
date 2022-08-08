@@ -64,6 +64,7 @@ class ProductList extends Component {
                     name={ item.title }
                     price={ item.price }
                     image={ item.thumbnail }
+                    item={ item }
                   />))
               ) }
             </div>

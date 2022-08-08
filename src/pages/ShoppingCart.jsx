@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getProductsById } from '../services/api';
+import { getCartItems } from '../services/localStorage';
 
 class ShoppingCart extends Component {
   constructor(props) {
@@ -10,15 +10,13 @@ class ShoppingCart extends Component {
   }
 
   componentDidMount = async () => {
-    const id = localStorage.getItem('product');
-    console.log(id);
-    const products = await getProductsById(id);
-    this.setState({ product: [products] });
+    const productResult = await getCartItems();
+    console.log(productResult);
+    this.setState({ product: productResult });
   }
 
   render() {
     const { product } = this.state;
-    const quantity = product.length;
     if (product.length === 0) {
       return (
         <div>
@@ -31,11 +29,15 @@ class ShoppingCart extends Component {
       );
     }
     return (
-      <div>
-        <p data-testid="shopping-cart-product-name">{ product[0].title }</p>
-        <p>{ product[0].price }</p>
-        <p data-testid="shopping-cart-product-quantity">{ quantity }</p>
-      </div>
+      product.map((p) => (
+        <div key={ p.id }>
+          <p data-testid="shopping-cart-product-name">{ p.title }</p>
+          <p>{ p.price }</p>
+          <p data-testid="shopping-cart-product-quantity">
+            { product.filter((pro) => pro.id === p.id).length }
+          </p>
+        </div>
+      ))
     );
   }
 }

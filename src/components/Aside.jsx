@@ -46,6 +46,7 @@ class Aside extends Component {
               name={ product.title }
               price={ product.price }
               image={ product.thumbnail }
+              item={ product }
             />
           ))}
       </div>
