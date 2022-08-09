@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
+import Reviews from '../components/Reviews';
 
 export default class ProductCardDetails extends Component {
   state = {
@@ -16,6 +17,9 @@ export default class ProductCardDetails extends Component {
 
   render() {
     const { product } = this.state;
+    const { match: { params: { id } } } = this.props;
+    console.log(id);
+
     return (
       <div>
         <div>
@@ -39,6 +43,8 @@ export default class ProductCardDetails extends Component {
             Carrinho de Compras
           </button>
         </Link>
+        <br />
+        <Reviews productId={ id } />
       </div>
     );
   }

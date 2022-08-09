@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Reviews.css';
+import PropTypes from 'prop-types';
+import { addReview } from '../services/localStorage';
 
 export default class Reviews extends Component {
   state={
@@ -72,6 +74,17 @@ export default class Reviews extends Component {
     } else { this.setState({ isSaveButtonDisabled: true }); }
   }
   // Regex extraido de https://www.w3resource.com/javascript/form/email-validation.php
+
+  saveReview = () => {
+    const { rating, comments, email } = this.state;
+    const { productId } = this.props;
+    const review = {
+      emailInp: email,
+      ratingInp: rating,
+      commentsInp: comments,
+    };
+    addReview(productId, review);
+  }
 
   render() {
     const { star1, star2, star3, star4,
@@ -156,3 +169,7 @@ export default class Reviews extends Component {
     );
   }
 }
+
+Reviews.propTypes = {
+  productId: PropTypes.string.isRequired,
+};

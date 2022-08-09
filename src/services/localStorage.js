@@ -35,3 +35,13 @@ export const removeItem = (item) => new Promise((resolve) => {
   saveInCart(itemsSaved.filter((i) => i.id !== item.id));
   simulateRequest(SUCCESS_STATUS)(resolve);
 });
+
+export const readSavedComments = (id) => JSON.parse(localStorage.getItem(id));
+
+export const saveComment = (id, ItemToSave) => localStorage
+  .setItem(id, JSON.stringify(ItemToSave));
+
+export const addReview = (id, obj) => {
+  const commentsSaved = readSavedComments(id);
+  saveComment(id, [...commentsSaved, obj]);
+};
