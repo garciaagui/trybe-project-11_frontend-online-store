@@ -1,0 +1,22 @@
+.inactive {
+  background: none;
+  border: none;
+  color: #999;
+  font: inherit;
+  outline: none;
+  padding: 0;
+}
+
+.inactive:hover {
+  color: black;
+
+}
+
+.active {
+  background: none;
+  border: none;
+  color: black;
+  font: inherit;
+  outline: none;
+  padding: 0;
+}
