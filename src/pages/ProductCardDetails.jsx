@@ -18,7 +18,6 @@ export default class ProductCardDetails extends Component {
   render() {
     const { product } = this.state;
     const { match: { params: { id } } } = this.props;
-    console.log(id);
 
     return (
       <div>

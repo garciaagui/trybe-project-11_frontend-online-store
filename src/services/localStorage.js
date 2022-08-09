@@ -43,5 +43,9 @@ export const saveComment = (id, ItemToSave) => localStorage
 
 export const addReview = (id, obj) => {
   const commentsSaved = readSavedComments(id);
-  saveComment(id, [...commentsSaved, obj]);
+  if (commentsSaved === null) {
+    saveComment(id, [obj]);
+  } else {
+    saveComment(id, [...commentsSaved, obj]);
+  }
 };
