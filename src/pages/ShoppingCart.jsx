@@ -12,15 +12,38 @@ class ShoppingCart extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    const productResult = await getCartItems();
-    // console.log(productResult);
+  componentDidMount = () => {
+    const productResult = getCartItems();
+    console.log(productResult);
     this.setState({ product: productResult });
   }
 
-  componentDidUpdate = async () => {
-    const productResult = await getCartItems();
-    this.setState({ product: productResult });
+  increaseQuantity = (item) => {
+    addItem(item);
+    this.setState((prevState) => ({
+      product: [...prevState.product, item],
+    }));
+  }
+
+  decreaseQuantity = (item) => {
+    const { product } = this.state;
+    const itemsQuantity = product.filter((i) => i.id === item.id).length;
+    if (itemsQuantity > 1) {
+      const itemIndex = product.lastIndexOf(product.find((i) => i.id === item.id));
+      decreaseItem(item);
+      this.setState((prevState) => ({
+        product: prevState.product
+          .filter((_, index) => itemIndex !== index),
+      }));
+    }
+  }
+
+  removeFromCart = (item) => {
+    removeItem(item);
+    this.setState((prevState) => ({
+      product: prevState.product
+        .filter((el) => el.id !== item.id),
+    }));
   }
 
   render() {
@@ -55,21 +78,21 @@ class ShoppingCart extends Component {
             <button
               type="button"
               data-testid="product-increase-quantity"
-              onClick={ async () => addItem(p) }
+              onClick={ () => this.increaseQuantity(p) }
             >
               +1
             </button>
             <button
               type="button"
               data-testid="product-decrease-quantity"
-              onClick={ async () => decreaseItem(p) }
+              onClick={ () => this.decreaseQuantity(p) }
             >
               -1
             </button>
             <button
               type="button"
               data-testid="remove-product"
-              onClick={ async () => removeItem(p) }
+              onClick={ () => this.removeFromCart(p) }
             >
               Remover do Carrinho
             </button>
