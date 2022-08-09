@@ -7,7 +7,6 @@ export default class Product extends Component {
   addToCart = async (event) => {
     event.preventDefault();
     const { item } = this.props;
-    console.log(this.props);
     await addItem(item);
   }
 

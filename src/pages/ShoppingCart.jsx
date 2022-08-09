@@ -11,7 +11,6 @@ class ShoppingCart extends Component {
 
   componentDidMount = async () => {
     const productResult = await getCartItems();
-    console.log(productResult);
     this.setState({ product: productResult });
   }
 
