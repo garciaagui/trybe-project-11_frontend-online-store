@@ -16,7 +16,7 @@ export default class ProductCardDetails extends Component {
   }
 
   // setLocalStorage = (element) => {
-  //   localStorage.setItem('product', element);
+  //   localStorage.setItem('product', element);;
   // }
 
   render() {
