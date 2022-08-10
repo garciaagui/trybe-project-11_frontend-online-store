@@ -2,21 +2,30 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
-import { addItem } from '../services/localStorage';
+import { addItem, getCartItems } from '../services/localStorage';
 
 export default class ProductCardDetails extends Component {
   state = {
     product: {},
+    cartNumb: [],
   }
 
   async componentDidMount() {
+    const result = getCartItems();
+    this.setState({ cartNumb: result });
     const { match: { params: { id } } } = this.props;
     const productResult = await getProductsById(id);
     this.setState({ product: productResult });
   }
 
+  handleNumbCart = (product) => {
+    addItem(product);
+    const result = getCartItems();
+    this.setState({ cartNumb: result });
+  }
+
   render() {
-    const { product } = this.state;
+    const { product, cartNumb } = this.state;
     return (
       <div>
         <div>
@@ -42,10 +51,11 @@ export default class ProductCardDetails extends Component {
             Carrinho de Compras
           </button>
         </Link>
+        <p data-testid="shopping-cart-size">{ cartNumb.length }</p>
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ () => addItem(product) }
+          onClick={ () => this.handleNumbCart(product) }
         >
           Adicionar ao Carrinho
 
