@@ -12,9 +12,10 @@ export default class Reviews extends Component {
     star4: 'inactive',
     star5: 'inactive',
     rating: 0,
-    isSaveButtonDisabled: true,
+    validReview: false,
     comments: '',
     savedComments: [],
+    errorMsg: false,
   }
 
   componentDidMount = () => {
@@ -86,15 +87,15 @@ export default class Reviews extends Component {
   checkEmail = () => {
     const { email } = this.state;
     if (email.length > 0 && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      this.setState({ isSaveButtonDisabled: false });
-    } else { this.setState({ isSaveButtonDisabled: true }); }
+      this.setState({ validReview: true });
+    } else { this.setState({ validReview: false }); }
   }
   // Regex extraido de https://www.w3resource.com/javascript/form/email-validation.php
 
   resetForm = () => {
     this.setState({
       rating: 0,
-      isSaveButtonDisabled: true,
+      validReview: false,
       comments: '',
       email: '',
       star1: 'inactive',
@@ -106,30 +107,36 @@ export default class Reviews extends Component {
   }
 
   saveReview = () => {
-    const { rating, comments, email } = this.state;
+    const { rating, comments, email, validReview } = this.state;
     const { productId } = this.props;
-    const review = {
-      emailInp: email,
-      ratingInp: rating,
-      commentsInp: comments,
-    };
-    addReview(productId, review);
-    this.resetForm();
-    this.renderFromLocalStorage();
+    if (validReview === false || rating === 0) {
+      this.setState({ errorMsg: true });
+    } else {
+      const review = {
+        emailInp: email,
+        ratingInp: rating,
+        commentsInp: comments,
+      };
+      addReview(productId, review);
+      this.resetForm();
+      this.renderFromLocalStorage();
+      this.setState({ errorMsg: false });
+    }
   }
 
   render() {
     const { star1, star2, star3, star4, star5, email, comments,
-      isSaveButtonDisabled, savedComments } = this.state;
+      savedComments, errorMsg } = this.state;
 
     return (
       <div>
         <form>
+          { errorMsg ? <span data-testid="error-msg">Campos inválidos</span> : null }
           <label htmlFor="email">
             Email:
             <input
               data-testid="product-detail-email"
-              type="email"
+              type="text"
               value={ email }
               id="email"
               onChange={ this.getEmail }
@@ -194,7 +201,6 @@ export default class Reviews extends Component {
           <button
             type="button"
             data-testid="submit-review-btn"
-            disabled={ isSaveButtonDisabled }
             onClick={ this.saveReview }
           >
             Enviar
@@ -205,7 +211,7 @@ export default class Reviews extends Component {
             ? <span>Seja o primeiro a comentar</span>
             : savedComments.map((element) => (
               <div key={ element.key }>
-                <h5 data-testid="review-card-email">{`Usuário: ${element.emailInp}`}</h5>
+                <h5 data-testid="review-card-email">{element.emailInp}</h5>
                 <p data-testid="review-card-rating">{`Nota: ${element.ratingInp}`}</p>
                 <p data-testid="review-card-evaluation">{ element.commentsInp }</p>
               </div>
