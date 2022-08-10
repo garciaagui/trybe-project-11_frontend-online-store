@@ -12,6 +12,8 @@ class Aside extends Component {
     };
   }
 
+  //
+
   componentDidMount = async () => {
     const category = await getCategories();
     this.setState({ category });
