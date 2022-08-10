@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getCategories, getProductsByCategory } from '../services/api';
 import Product from './ProductCard';
 
@@ -23,6 +24,7 @@ class Aside extends Component {
 
   render() {
     const { category, resultsFromCategory } = this.state;
+    const { handleNumbCart } = this.props;
     return (
       <div>
         { resultsFromCategory.length === 0
@@ -47,11 +49,16 @@ class Aside extends Component {
               price={ product.price }
               image={ product.thumbnail }
               item={ product }
+              handleNumbCart={ handleNumbCart }
             />
           ))}
       </div>
     );
   }
 }
+
+Aside.propTypes = {
+  handleNumbCart: PropTypes.func.isRequired,
+};
 
 export default Aside;

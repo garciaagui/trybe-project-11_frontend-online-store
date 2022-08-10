@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Product from '../components/ProductCard';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import { getCartItems } from '../services/localStorage';
 import Aside from '../components/Aside';
 
 class ProductList extends Component {
   state ={
     valueInput: '',
     dataReturned: [],
+    products: [],
+  }
+
+  componentDidMount = () => {
+    const result = getCartItems();
+    this.setState({ products: result });
   }
 
   setValueInput = (event) => {
@@ -22,8 +29,13 @@ class ProductList extends Component {
     this.setState({ dataReturned: data.results, fetchFail });
   }
 
+  handleNumbCart = () => {
+    const result = getCartItems();
+    this.setState({ products: result });
+  }
+
   render() {
-    const { valueInput, dataReturned, fetchFail } = this.state;
+    const { valueInput, dataReturned, fetchFail, products } = this.state;
     return (
       <div>
         <main>
@@ -45,7 +57,9 @@ class ProductList extends Component {
           >
             BUSCAR
           </button>
-          <Aside />
+          <Aside
+            handleNumbCart={ this.handleNumbCart }
+          />
           <div id="search-list">
             { valueInput.length === 0 ? (
               <span
@@ -65,6 +79,7 @@ class ProductList extends Component {
                     price={ item.price }
                     image={ item.thumbnail }
                     item={ item }
+                    handleNumbCart={ this.handleNumbCart }
                   />))
               ) }
             </div>
@@ -74,6 +89,8 @@ class ProductList extends Component {
           <button type="button">
             Carrinho de Compras
           </button>
+          {products === null
+            ? <p>0</p> : (<p data-testid="shopping-cart-size">{ products.length }</p>)}
         </Link>
       </div>
     );

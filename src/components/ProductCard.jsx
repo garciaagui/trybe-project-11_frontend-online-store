@@ -6,9 +6,9 @@ import { addItem } from '../services/localStorage';
 export default class Product extends Component {
   addToCart = (event) => {
     event.preventDefault();
-    const { item } = this.props;
-    console.log(this.props);
+    const { item, handleNumbCart } = this.props;
     addItem(item);
+    handleNumbCart();
   }
 
   render() {
@@ -50,4 +50,5 @@ Product.propTypes = {
       free_shipping: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
+  handleNumbCart: PropTypes.func.isRequired,
 };
