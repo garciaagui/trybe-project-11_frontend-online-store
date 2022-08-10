@@ -4,14 +4,19 @@ import PropTypes from 'prop-types';
 import { addItem } from '../services/localStorage';
 
 export default class Product extends Component {
-  addToCart = async (event) => {
+  addToCart = (event) => {
     event.preventDefault();
     const { item } = this.props;
+<<<<<<< HEAD
     await addItem(item);
+=======
+    console.log(this.props);
+    addItem(item);
+>>>>>>> 40dd5f3fb0025b75604e8ce4dae6432e0ac7d98d
   }
 
   render() {
-    const { name, price, image, id } = this.props;
+    const { name, price, image, id, item } = this.props;
     return (
       <div>
         <Link
@@ -32,6 +37,7 @@ export default class Product extends Component {
             Adicionar ao Carrinho
           </button>
         </Link>
+        {item.shipping.free_shipping && <p data-testid="free-shipping">Frete grátis</p>}
       </div>
     );
   }
@@ -44,5 +50,8 @@ Product.propTypes = {
   id: PropTypes.string.isRequired,
   item: PropTypes.shape({
     id: PropTypes.string,
+    shipping: PropTypes.shape({
+      free_shipping: PropTypes.bool.isRequired,
+    }).isRequired,
   }).isRequired,
 };

@@ -15,10 +15,6 @@ export default class ProductCardDetails extends Component {
     this.setState({ product: productResult });
   }
 
-  // setLocalStorage = (element) => {
-  //   localStorage.setItem('product', element);
-  // }
-
   render() {
     const { product } = this.state;
     return (
@@ -49,7 +45,7 @@ export default class ProductCardDetails extends Component {
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
-          onClick={ async () => addItem(product) }
+          onClick={ () => addItem(product) }
         >
           Adicionar ao Carrinho
 
