@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
 import Reviews from '../components/Reviews';
+import { addItem } from '../services/localStorage';
 
 export default class ProductCardDetails extends Component {
   state = {
@@ -38,12 +39,22 @@ export default class ProductCardDetails extends Component {
           </div>
         </div>
         <Link data-testid="shopping-cart-button" to="/shopping-cart">
-          <button type="button">
+          <button
+            type="button"
+          >
             Carrinho de Compras
           </button>
         </Link>
         <br />
         <Reviews productId={ id } />
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => addItem(product) }
+        >
+          Adicionar ao Carrinho
+
+        </button>
       </div>
     );
   }

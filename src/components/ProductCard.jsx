@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { addItem } from '../services/localStorage';
 
 export default class Product extends Component {
+  addToCart = (event) => {
+    event.preventDefault();
+    const { item } = this.props;
+    console.log(this.props);
+    addItem(item);
+  }
+
   render() {
-    const { name, price, image, id } = this.props;
+    const { name, price, image, id, item } = this.props;
     return (
       <div>
         <Link
@@ -16,7 +24,16 @@ export default class Product extends Component {
             <p>{ name }</p>
             <p>{ price }</p>
           </div>
+          <button
+            id={ id }
+            type="button"
+            data-testid="product-add-to-cart"
+            onClick={ this.addToCart }
+          >
+            Adicionar ao Carrinho
+          </button>
         </Link>
+        {item.shipping.free_shipping && <p data-testid="free-shipping">Frete grátis</p>}
       </div>
     );
   }
@@ -27,4 +44,10 @@ Product.propTypes = {
   price: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  item: PropTypes.shape({
+    id: PropTypes.string,
+    shipping: PropTypes.shape({
+      free_shipping: PropTypes.bool.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
