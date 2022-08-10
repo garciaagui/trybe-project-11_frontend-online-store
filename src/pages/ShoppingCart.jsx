@@ -19,10 +19,15 @@ class ShoppingCart extends Component {
   }
 
   increaseQuantity = (item) => {
-    addItem(item);
-    this.setState((prevState) => ({
-      product: [...prevState.product, item],
-    }));
+    const { available_quantity: availableQuantity } = item;
+    const { product } = this.state;
+    const itemsQuantity = product.filter((i) => i.id === item.id).length;
+    if (itemsQuantity < availableQuantity) {
+      addItem(item);
+      this.setState((prevState) => ({
+        product: [...prevState.product, item],
+      }));
+    }
   }
 
   decreaseQuantity = (item) => {
@@ -60,7 +65,7 @@ class ShoppingCart extends Component {
       );
     }
     return (
-      // Explicação de como utilizei o Reduce:;
+      // Explicação de como utilizei o Reduce:
       // 1o: Defini um array como valor inicial do acumulador (acc);
       // 2o: Para cada elemento de product, verifiquei se havia um semelhante no array do acumulador, utilizando o atributo "id" para comparação. Caso não houvesse, o elemento em questão é acrescentado no array do acc via método push.
       // 3o: Ao final da iteração, temos um array sem produtos repetidos no qual podemos replicar a estrutura e lógica existentes.
