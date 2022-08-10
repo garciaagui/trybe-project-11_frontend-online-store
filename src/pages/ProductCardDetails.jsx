@@ -5,7 +5,6 @@ import { getProductsById } from '../services/api';
 import { addItem, getCartItems } from '../services/localStorage';
 import Reviews from '../components/Reviews';
 
-
 export default class ProductCardDetails extends Component {
   state = {
     product: {},
@@ -27,10 +26,8 @@ export default class ProductCardDetails extends Component {
   }
 
   render() {
-
     const { product, cartNumb } = this.state;
     const { match: { params: { id } } } = this.props;
-    
     return (
       <div>
         <div>
