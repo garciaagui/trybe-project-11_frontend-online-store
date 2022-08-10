@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getProductsById } from '../services/api';
 import { addItem, getCartItems } from '../services/localStorage';
+import Reviews from '../components/Reviews';
+
 
 export default class ProductCardDetails extends Component {
   state = {
@@ -25,7 +27,10 @@ export default class ProductCardDetails extends Component {
   }
 
   render() {
+
     const { product, cartNumb } = this.state;
+    const { match: { params: { id } } } = this.props;
+    
     return (
       <div>
         <div>
@@ -52,6 +57,8 @@ export default class ProductCardDetails extends Component {
           </button>
         </Link>
         <p data-testid="shopping-cart-size">{ cartNumb.length }</p>
+        <br />
+        <Reviews productId={ id } />
         <button
           type="button"
           data-testid="product-detail-add-to-cart"

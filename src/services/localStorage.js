@@ -23,6 +23,20 @@ export const removeItem = (item) => {
   saveInCart(itemsSaved.filter((i) => i.id !== item.id));
 };
 
+export const readSavedComments = (id) => JSON.parse(localStorage.getItem(id));
+
+export const saveComment = (id, ItemToSave) => localStorage
+  .setItem(id, JSON.stringify(ItemToSave));
+
+export const addReview = (id, obj) => {
+  const commentsSaved = readSavedComments(id);
+  if (commentsSaved === null) {
+    saveComment(id, [obj]);
+  } else {
+    saveComment(id, [...commentsSaved, obj]);
+  }
+};
+
 // Tive que criar uma função, pois a removeItem eliminava todos as unidades do item. Segue explicação:
 // 1o: Para conseguir a qtd do item no carrinho, utilizei a mesma lógica aplicada no ShoppingCart;
 // 2o: Vi o pessoal comentando que, caso a qtd do item seja "1", o botão não deveria diminuir a qtd (no caso, excluir o item). Criei a lógica, mas mesmo assim não passou nos testes;
