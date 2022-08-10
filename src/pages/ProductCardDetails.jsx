@@ -53,7 +53,8 @@ export default class ProductCardDetails extends Component {
             Carrinho de Compras
           </button>
         </Link>
-        <p data-testid="shopping-cart-size">{ cartNumb.length }</p>
+        {cartNumb === null
+          ? <p>0</p> : (<p data-testid="shopping-cart-size">{ cartNumb.length }</p>)}
         <br />
         <Reviews productId={ id } />
         <button

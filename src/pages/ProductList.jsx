@@ -89,7 +89,8 @@ class ProductList extends Component {
           <button type="button">
             Carrinho de Compras
           </button>
-          <p data-testid="shopping-cart-size">{ products.length }</p>
+          {products === null
+            ? <p>0</p> : (<p data-testid="shopping-cart-size">{ products.length }</p>)}
         </Link>
       </div>
     );
