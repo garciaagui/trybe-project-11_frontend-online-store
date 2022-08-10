@@ -21,7 +21,7 @@ export const addItem = (item) => {
 export const removeItem = (item) => {
   const itemsSaved = readItemsSaved();
   saveInCart(itemsSaved.filter((i) => i.id !== item.id));
-});
+};
 
 export const readSavedComments = (id) => JSON.parse(localStorage.getItem(id));
 
@@ -34,6 +34,7 @@ export const addReview = (id, obj) => {
     saveComment(id, [obj]);
   } else {
     saveComment(id, [...commentsSaved, obj]);
+  }
 };
 
 // Tive que criar uma função, pois a removeItem eliminava todos as unidades do item. Segue explicação:
