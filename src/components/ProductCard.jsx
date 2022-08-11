@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { addItem } from '../services/localStorage';
 
 export default class Product extends Component {
-  addToCart = (event) => {
-    event.preventDefault();
+  addToCart = () => {
     const { item, handleNumbCart } = this.props;
     addItem(item);
     handleNumbCart();
@@ -24,15 +23,15 @@ export default class Product extends Component {
             <p>{ name }</p>
             <p>{ price }</p>
           </div>
-          <button
-            id={ id }
-            type="button"
-            data-testid="product-add-to-cart"
-            onClick={ this.addToCart }
-          >
-            Adicionar ao Carrinho
-          </button>
         </Link>
+        <button
+          id={ id }
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ this.addToCart }
+        >
+          Adicionar ao Carrinho
+        </button>
         {item.shipping.free_shipping && <p data-testid="free-shipping">Frete grátis</p>}
       </div>
     );
