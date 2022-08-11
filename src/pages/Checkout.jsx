@@ -20,13 +20,11 @@ export default class Checkout extends Component {
 
   componentDidMount = () => {
     const productResult = getCartItems();
-    console.log(productResult);
     this.setState({ product: productResult });
   }
 
   OnInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(value);
     this.setState({ [name]: value }, () => {
       const {
         fullName, email, CPF, phone,

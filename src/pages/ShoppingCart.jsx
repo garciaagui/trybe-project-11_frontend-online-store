@@ -15,7 +15,6 @@ class ShoppingCart extends Component {
 
   componentDidMount = () => {
     const productResult = getCartItems();
-    console.log(productResult);
     this.setState({ product: productResult });
   }
 
@@ -54,7 +53,7 @@ class ShoppingCart extends Component {
 
   render() {
     const { product } = this.state;
-    if (!product) {
+    if (!product || product.length === 0) {
       return (
         <div>
           <span
@@ -62,6 +61,11 @@ class ShoppingCart extends Component {
           >
             Seu carrinho está vazio
           </span>
+          <Link data-testid="checkout-products" to="/checkout">
+            <button type="button">
+              Finalizar Compras
+            </button>
+          </Link>
         </div>
       );
     }
@@ -107,13 +111,11 @@ class ShoppingCart extends Component {
               </div>
             ))
         }
-        <div>
-          <Link data-testid="checkout-products" to="/checkout">
-            <button type="button">
-              Finalizar Compras
-            </button>
-          </Link>
-        </div>
+        <Link data-testid="checkout-products" to="/checkout">
+          <button type="button">
+            Finalizar Compras
+          </button>
+        </Link>
       </div>
     );
   }
