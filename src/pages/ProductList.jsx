@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Product from '../components/ProductCard';
-import { getProductsFromCategoryAndQuery } from '../services/api';
+import { getProductsFromCategoryAndQuery, getProductsByCategory } from '../services/api';
 import { getCartItems } from '../services/localStorage';
 import Aside from '../components/Aside';
 
 class ProductList extends Component {
-  state ={
+  state = {
     valueInput: '',
     dataReturned: [],
+    category: '',
     products: [],
   }
 
@@ -22,11 +23,30 @@ class ProductList extends Component {
     this.setState({ valueInput: value });
   }
 
+  handleCategory = ({ target }) => {
+    this.setState({ dataReturned: [] }, () => {
+      this.setState({ category: target.value }, async () => {
+        const { category } = this.state;
+        const data = await getProductsByCategory(category);
+        const fetchFail = data.results.length === 0;
+        this.setState({
+          dataReturned: data.results,
+          fetchFail,
+          valueInput: '' });
+      });
+    });
+  }
+
   searchQuery = async () => {
     const { valueInput } = this.state;
-    const data = await getProductsFromCategoryAndQuery(valueInput);
-    const fetchFail = data.results.length === 0;
-    this.setState({ dataReturned: data.results, fetchFail });
+    this.setState({ dataReturned: [] }, async () => {
+      const data = await getProductsFromCategoryAndQuery(valueInput);
+      const fetchFail = data.results.length === 0;
+      this.setState({
+        dataReturned: data.results,
+        fetchFail,
+        category: '' });
+    });
   }
 
   handleNumbCart = () => {
@@ -35,7 +55,7 @@ class ProductList extends Component {
   }
 
   render() {
-    const { valueInput, dataReturned, fetchFail, products } = this.state;
+    const { valueInput, dataReturned, fetchFail, products, category } = this.state;
     return (
       <div>
         <main>
@@ -59,6 +79,8 @@ class ProductList extends Component {
           </button>
           <Aside
             handleNumbCart={ this.handleNumbCart }
+            isThisCategory={ category }
+            handleCategory={ this.handleCategory }
           />
           <div id="search-list">
             { valueInput.length === 0 ? (

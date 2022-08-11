@@ -1,64 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getCategories, getProductsByCategory } from '../services/api';
-import Product from './ProductCard';
+import { getCategories } from '../services/api';
 
 class Aside extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: [],
-      resultsFromCategory: [],
+      categories: [],
     };
   }
 
   componentDidMount = async () => {
-    const category = await getCategories();
-    this.setState({ category });
-  }
-
-  listCategory = async (cat) => {
-    const list = await getProductsByCategory(cat.id);
-    this.setState({ resultsFromCategory: list.results });
+    const categories = await getCategories();
+    this.setState({ categories });
   }
 
   render() {
-    const { category, resultsFromCategory } = this.state;
-    const { handleNumbCart } = this.props;
+    const { categories } = this.state;
+    const { handleCategory, isThisCategory } = this.props;
     return (
       <div>
-        { resultsFromCategory.length === 0
-          ? category.map((cat) => (
-            <div key={ cat.id }>
-              <label data-testid="category" htmlFor={ cat.id }>
+        {
+          categories.map((category) => (
+            <div key={ category.id }>
+              <label data-testid="category" htmlFor={ category.id }>
                 <input
-                  id={ cat.id }
+                  id={ category.id }
                   type="radio"
-                  onChange={ () => this.listCategory(cat) }
+                  value={ category.id }
+                  checked={ isThisCategory === category.id }
+                  onChange={ handleCategory }
                 />
-                {cat.name}
+                {category.name}
               </label>
-              <br />
             </div>
           ))
-          : resultsFromCategory.map((product) => (
-            <Product
-              key={ product.id }
-              id={ product.id }
-              name={ product.title }
-              price={ product.price }
-              image={ product.thumbnail }
-              item={ product }
-              handleNumbCart={ handleNumbCart }
-            />
-          ))}
+        }
       </div>
     );
   }
 }
 
 Aside.propTypes = {
-  handleNumbCart: PropTypes.func.isRequired,
+  handleCategory: PropTypes.func.isRequired,
+  isThisCategory: PropTypes.string.isRequired,
 };
 
 export default Aside;
