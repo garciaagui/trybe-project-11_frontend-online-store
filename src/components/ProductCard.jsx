@@ -49,5 +49,4 @@ Product.propTypes = {
       free_shipping: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
-  handleNumbCart: PropTypes.func.isRequired,
 };
