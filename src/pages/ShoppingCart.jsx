@@ -20,10 +20,15 @@ class ShoppingCart extends Component {
   }
 
   increaseQuantity = (item) => {
-    addItem(item);
-    this.setState((prevState) => ({
-      product: [...prevState.product, item],
-    }));
+    const { available_quantity: availableQuantity } = item;
+    const { product } = this.state;
+    const itemsQuantity = product.filter((i) => i.id === item.id).length;
+    if (itemsQuantity < availableQuantity) {
+      addItem(item);
+      this.setState((prevState) => ({
+        product: [...prevState.product, item],
+      }));
+    }
   }
 
   decreaseQuantity = (item) => {

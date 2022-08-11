@@ -7,6 +7,7 @@ export default class Product extends Component {
   addToCart = () => {
     const { item } = this.props;
     addItem(item);
+    handleNumbCart();
   }
 
   render() {
@@ -48,4 +49,5 @@ Product.propTypes = {
       free_shipping: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
+  handleNumbCart: PropTypes.func.isRequired,
 };
